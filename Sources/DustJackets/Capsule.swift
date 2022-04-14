@@ -22,8 +22,8 @@ public struct Capsule<Content: View>: View {
     }
 }
 
-extension Capsule {
-    public func backgroundColor(_ color: Color) -> some View {
+public extension Capsule {
+    func backgroundColor(_ color: Color) -> some View {
         var updatedView = self
         updatedView.background = color
         return updatedView
