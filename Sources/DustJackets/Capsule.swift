@@ -1,11 +1,11 @@
 import SwiftUI
 
-public struct ItemCapsule<Content: View>: View {
-    @ViewBuilder var content: Content
+public struct Capsule<Content: View>: View {
+    private var content: Content
+    private var background: Color = Color(.systemGray6)
     
     private let MIN_HEIGHT: CGFloat = 60.0
     private let CORNER_RADIUS: CGFloat = 15.0
-    private let BACKGROUND: Color = Color(.systemGray6)
     
     public var body: some View {
         HStack(spacing: 0) {
@@ -13,42 +13,57 @@ public struct ItemCapsule<Content: View>: View {
                 .padding(CORNER_RADIUS)
         }
         .frame(maxWidth: .infinity, minHeight: MIN_HEIGHT)
-        .background(BACKGROUND)
+        .background(background)
         .cornerRadius(CORNER_RADIUS)
+    }
+    
+    public init(@ViewBuilder contentBuilder: () -> Content) {
+        content = contentBuilder()
+    }
+}
+
+extension Capsule {
+    func background(_ color: Color) -> some View {
+        var updatedView = self
+        updatedView.background = color
+        return updatedView
     }
 }
 
 struct Capsule_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            ItemCapsule {
+            Capsule {
                 Text("Hello World!")
             }
-            ItemCapsule {
+            Capsule {
+                Text("Hello World!")
+            }.background(.red)
+            Capsule {
                 Text("Hello World!")
                 Spacer()
                 Image(systemName: "checkmark")
             }
             HStack {
-                ItemCapsule {
+                Capsule {
                     Text("Hello World!")
                 }
-                ItemCapsule {
+                Capsule {
                     Text("Hello World!")
                 }
             }
             HStack {
                 ForEach(0..<7) { n in
-                    ItemCapsule {
+                    Capsule {
                         Text(String(n))
                     }
                 }
             }
-            ItemCapsule {
+            Capsule {
                 Text("We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers.")
             }
             HStack {
-                ItemCapsule {
+                Capsule {
                     Text("We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers.")
                     Image(systemName: "checkmark")
                 }
