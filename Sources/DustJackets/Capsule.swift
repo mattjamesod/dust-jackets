@@ -23,7 +23,7 @@ public struct Capsule<Content: View>: View {
 }
 
 extension Capsule {
-    func background(_ color: Color) -> some View {
+    public func backgroundColor(_ color: Color) -> some View {
         var updatedView = self
         updatedView.background = color
         return updatedView
@@ -38,7 +38,7 @@ struct Capsule_Previews: PreviewProvider {
             }
             Capsule {
                 Text("Hello World!")
-            }.background(.red)
+            }.backgroundColor(.red)
             Capsule {
                 Text("Hello World!")
                 Spacer()
