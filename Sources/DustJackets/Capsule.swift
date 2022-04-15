@@ -10,8 +10,8 @@ public struct Capsule<Content: View>: View {
     public var body: some View {
         HStack(spacing: 0) {
             content
-                .padding(CORNER_RADIUS)
         }
+        .padding(CORNER_RADIUS)
         .frame(maxWidth: .infinity, minHeight: MIN_HEIGHT)
         .background(background)
         .cornerRadius(CORNER_RADIUS)
@@ -38,12 +38,30 @@ struct Capsule_Previews: PreviewProvider {
             }
             Capsule {
                 Text("Hello World!")
-            }.backgroundColor(.red)
-            Capsule {
-                Text("Hello World!")
                 Spacer()
                 Image(systemName: "checkmark")
             }
+            Capsule {
+                VStack(alignment: .leading) {
+                    Text("Hello World!")
+                    Text("Long Author Name")
+                        .font(.smallCaps(.subheadline)())
+                }
+                Spacer()
+                Image(systemName: "checkmark")
+            }
+            Capsule {
+                VStack(alignment: .leading) {
+                    Text("Hello World!")
+                    Text("super duper extra pro extra Long Author Name")
+                        .font(.smallCaps(.subheadline)())
+                }
+                Spacer()
+                Image(systemName: "checkmark")
+            }
+            Capsule {
+                Text("Hello World!")
+            }.backgroundColor(.red)
             HStack {
                 Capsule {
                     Text("Hello World!")
@@ -70,5 +88,6 @@ struct Capsule_Previews: PreviewProvider {
             }
         }
         .padding(.horizontal, 10)
+        .previewInterfaceOrientation(.portrait)
     }
 }
