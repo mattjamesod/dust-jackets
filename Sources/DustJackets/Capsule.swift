@@ -1,8 +1,10 @@
 import SwiftUI
 
-public struct Capsule<Content: View>: View {
+public struct Capsule<Content: View>: View, Identifiable {
+    public var id: UUID = UUID()
+    
     private var content: Content
-    private var background: Color = Color(.systemGray6)
+    private var backgroundColor: Color
     
     private let MIN_HEIGHT: CGFloat = 60.0
     private let CORNER_RADIUS: CGFloat = 15.0
@@ -13,11 +15,15 @@ public struct Capsule<Content: View>: View {
         }
         .padding(CORNER_RADIUS)
         .frame(maxWidth: .infinity, minHeight: MIN_HEIGHT)
-        .background(background)
+        .background(backgroundColor)
         .cornerRadius(CORNER_RADIUS)
     }
     
-    public init(@ViewBuilder contentBuilder: () -> Content) {
+    public init(
+        _ background: Color = Color(.systemGray6),
+        @ViewBuilder contentBuilder: () -> Content)
+    {
+        backgroundColor = background
         content = contentBuilder()
     }
 }
@@ -25,7 +31,7 @@ public struct Capsule<Content: View>: View {
 public extension Capsule {
     func backgroundColor(_ color: Color) -> some View {
         var updatedView = self
-        updatedView.background = color
+        updatedView.backgroundColor = color
         return updatedView
     }
 }
