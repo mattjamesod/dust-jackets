@@ -42,7 +42,6 @@ public extension CapsuleContainer {
 struct CapsuleContainer_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            CapsuleContainer (mainContent: {  }, listItems: {  })
             CapsuleContainer (mainContent: {
                 Text("Main content, no items")
             }, listItems: { })
