@@ -6,9 +6,9 @@ public struct CapsuleContainer<Content: View, ListContent: View>: View {
     
     private var backgroundColor: Color
     
-    private let MIN_HEIGHT: CGFloat = 60.0
-    private let CORNER_RADIUS: CGFloat = 15.0
-    private let CONTAINER_PADDING: CGFloat = 7.5
+    private let MIN_HEIGHT: CGFloat = CapsuleConstants.MIN_HEIGHT
+    private let CONTAINER_PADDING: CGFloat = CapsuleConstants.CONTAINER_PADDING
+    private let CORNER_RADIUS: CGFloat = CapsuleConstants.CORNER_RADIUS + CapsuleConstants.CONTAINER_PADDING
     
     public var body: some View {
         VStack(spacing: CONTAINER_PADDING) {
@@ -47,22 +47,12 @@ struct CapsuleContainer_Previews: PreviewProvider {
             }, listItems: { })
             CapsuleContainer (mainContent: {
             }, listItems: {
-                Group {
-                    VStack(alignment: .leading) {
-                        Text("The Way of Kings")
-                        Text("Brandon Sanderson")
-                            .font(.smallCaps(.subheadline)())
-                    }
-                    Spacer()
+                ListEntry(headline: "The Way of Kings",
+                          subline: "Brandon Sanderson") {
                     Image(systemName: "checkmark")
                 }
-                Group {
-                    VStack(alignment: .leading) {
-                        Text("Words of Radiance")
-                        Text("Brandon Sanderson")
-                            .font(.smallCaps(.subheadline)())
-                    }
-                    Spacer()
+                ListEntry(headline: "Words of Radiance",
+                          subline: "Brandon Sanderson") {
                     Image(systemName: "checkmark")
                 }
             })
@@ -79,22 +69,12 @@ struct CapsuleContainer_Previews: PreviewProvider {
                         .font(.smallCaps(.subheadline)())
                 }
             }, listItems: {
-                Group {
-                    VStack(alignment: .leading) {
-                        Text("The Way of Kings")
-                        Text("Brandon Sanderson")
-                            .font(.smallCaps(.subheadline)())
-                    }
-                    Spacer()
+                ListEntry(headline: "The Way of Kings",
+                          subline: "Brandon Sanderson") {
                     Image(systemName: "checkmark")
                 }
-                Group {
-                    VStack(alignment: .leading) {
-                        Text("Words of Radiance")
-                        Text("Brandon Sanderson")
-                            .font(.smallCaps(.subheadline)())
-                    }
-                    Spacer()
+                ListEntry(headline: "Words of Radiance",
+                          subline: "Brandon Sanderson") {
                     Image(systemName: "checkmark")
                 }
             })
@@ -109,31 +89,16 @@ struct CapsuleContainer_Previews: PreviewProvider {
                     .font(.smallCaps(.subheadline)())
             }
         }, listItems: {
-            Group {
-                VStack(alignment: .leading) {
-                    Text("The Final Empire")
-                    Text("Brandon Sanderson")
-                        .font(.smallCaps(.subheadline)())
-                }
-                Spacer()
+            ListEntry(headline: "The Final Empire",
+                      subline: "Brandon Sanderson") {
                 Image(systemName: "checkmark")
             }
-            Group {
-                VStack(alignment: .leading) {
-                    Text("The Well of Ascension")
-                    Text("Brandon Sanderson")
-                        .font(.smallCaps(.subheadline)())
-                }
-                Spacer()
+            ListEntry(headline: "The Well of Ascension",
+                      subline: "Brandon Sanderson") {
                 Image(systemName: "checkmark")
             }
-            Group {
-                VStack(alignment: .leading) {
-                    Text("The Hero of Ages")
-                    Text("Brandon Sanderson")
-                        .font(.smallCaps(.subheadline)())
-                }
-                Spacer()
+            ListEntry(headline: "The Hero of Ages",
+                      subline: "Brandon Sanderson") {
                 Image(systemName: "checkmark")
             }
         })

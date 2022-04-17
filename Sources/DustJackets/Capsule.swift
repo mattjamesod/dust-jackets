@@ -6,8 +6,8 @@ public struct Capsule<Content: View>: View, Identifiable {
     private var content: Content
     private var backgroundColor: Color
     
-    private let MIN_HEIGHT: CGFloat = 60.0
-    private let CORNER_RADIUS: CGFloat = 15.0
+    private let MIN_HEIGHT: CGFloat = CapsuleConstants.MIN_HEIGHT
+    private let CORNER_RADIUS: CGFloat = CapsuleConstants.CORNER_RADIUS
     
     public var body: some View {
         HStack(spacing: 0) {

@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct ListEntryWithSubLine<Content: View>: View {
+public struct ListEntry<Content: View>: View {
     @ViewBuilder var content: Content
     
     let headline: String
@@ -27,7 +27,7 @@ public struct ListEntryWithSubLine<Content: View>: View {
     }
 }
 
-extension ListEntryWithSubLine where Content == EmptyView {
+extension ListEntry where Content == EmptyView {
     public init(headline: String, subline: String = "") {
         self.init(headline: headline, subline: subline, contentBuilder: {
             EmptyView()
@@ -40,26 +40,28 @@ internal struct ListEntryWithCheckmark: View {
     let subline: String
     
     var body: some View {
-        ListEntryWithSubLine(headline: headline,
+        ListEntry(headline: headline,
                              subline: subline) {
             Image(systemName: "checkmark")
         }
     }
 }
 
-struct ListEntryWithSubLine_Previews: PreviewProvider {
+struct ListEntry_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 15) {
-            ListEntryWithSubLine(headline: "This entry has no subline or content")
+            ListEntry(headline: "This entry has no subline or content")
                 .background(Color(.systemGray6))
-            ListEntryWithSubLine(headline: "This entry has no subline") {
+            ListEntry(headline: "This entry has no subline or content but is really super duper long")
+                .background(Color(.systemGray6))
+            ListEntry(headline: "This entry has no subline") {
                 Image(systemName: "square")
             }
             .background(Color(.systemGray6))
-            ListEntryWithSubLine(headline: "This entry has no right content",
+            ListEntry(headline: "This entry has no right content",
                                  subline: "This is an author name")
             .background(Color(.systemGray6))
-            ListEntryWithSubLine(headline: "This is a title",
+            ListEntry(headline: "This is a title",
                                  subline: "This is an author name") {
                 Image(systemName: "cross")
             }
