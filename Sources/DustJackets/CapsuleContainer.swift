@@ -46,6 +46,27 @@ struct CapsuleContainer_Previews: PreviewProvider {
                 Text("Main content, no items")
             }, listItems: { })
             CapsuleContainer (mainContent: {
+            }, listItems: {
+                Group {
+                    VStack(alignment: .leading) {
+                        Text("The Way of Kings")
+                        Text("Brandon Sanderson")
+                            .font(.smallCaps(.subheadline)())
+                    }
+                    Spacer()
+                    Image(systemName: "checkmark")
+                }
+                Group {
+                    VStack(alignment: .leading) {
+                        Text("Words of Radiance")
+                        Text("Brandon Sanderson")
+                            .font(.smallCaps(.subheadline)())
+                    }
+                    Spacer()
+                    Image(systemName: "checkmark")
+                }
+            })
+            CapsuleContainer (mainContent: {
                 Text("One item")
             }, listItems: {
                 Text("I am the item")
