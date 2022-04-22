@@ -51,9 +51,9 @@ public extension Capsule where Background == HorizontalBinaryColorView {
         }
     }
 
-    func background(_ c1: Color, _ c2: Color, divide: CGFloat) -> some View {
+    func background(_ c1: Color, _ c2: Color = Color(.systemGray6), progress: CGFloat) -> some View {
         var updatedView = self
-        updatedView.backgroundContent = HorizontalBinaryColorView(c1, c2, divide)
+        updatedView.backgroundContent = HorizontalBinaryColorView(c1, c2, progress)
         return updatedView
     }
 }

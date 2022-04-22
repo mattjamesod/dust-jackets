@@ -29,14 +29,26 @@ struct HorizontalBinaryColorView_Previews: PreviewProvider {
 
 struct BinaryColorCapsule_Previews: PreviewProvider {
     static var previews: some View {
-        Capsule {
-            VStack(alignment: .leading) {
-                Text("Hello World!")
-                Text("Long Author Name")
-                    .font(.smallCaps(.subheadline)())
-            }
-            Spacer()
-            Image(systemName: "checkmark")
-        }.background(.red, .blue, divide: 0.3)
+        VStack {
+            Capsule {
+                VStack(alignment: .leading) {
+                    Text("Hello World!")
+                    Text("Long Author Name")
+                        .font(.smallCaps(.subheadline)())
+                }
+                Spacer()
+                Image(systemName: "checkmark")
+            }.background(.red, .blue, progress: 0.3)
+            Capsule {
+                VStack(alignment: .leading) {
+                    Text("Hello World!")
+                    Text("Long Author Name")
+                        .font(.smallCaps(.subheadline)())
+                }
+                Spacer()
+                Image(systemName: "checkmark")
+            }.background(.purple, progress: 0.7)
+        }
+        .padding(.horizontal, 10)
     }
 }
