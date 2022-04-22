@@ -17,7 +17,7 @@ public struct SingleAxisGeometryReader<Content: View>: View
 
     var axis: Axis = .horizontal
     var alignment: Alignment = .center
-    let content: (CGFloat)->Content
+    let content: (CGFloat) -> Content
 
     public var body: some View
     {
