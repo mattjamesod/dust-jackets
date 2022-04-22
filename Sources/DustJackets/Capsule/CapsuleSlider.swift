@@ -13,20 +13,25 @@ public struct CapsuleSlider<Content: View>: View, Identifiable {
     // always between 0 and 1
     @State var sliderPosition: CGFloat
     
+    func sliderGesture(_ width: CGFloat) -> some Gesture {
+        DragGesture()
+            .onChanged { value in
+                sliderPosition = (value.location.x / width)
+                    .clamped(to: 0.0...1.0)
+            }
+            .onEnded { value in
+                // send to publisher
+            }
+    }
+    
     public var body: some View {
         SingleAxisGeometryReader { width in
             Capsule {
                 content
             }
             .background(.blue, progress: sliderPosition)
-            .gesture(DragGesture()
-                .onChanged { value in
-                    sliderPosition = (value.location.x / width)
-                        .clamped(to: 0.0...1.0)
-                }
-                .onEnded { value in
-                    // send to publisher
-                }
+            .gesture(
+                sliderGesture(width)
             )
         }
     }
