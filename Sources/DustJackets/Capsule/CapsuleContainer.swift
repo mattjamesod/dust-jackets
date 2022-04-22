@@ -52,9 +52,7 @@ struct CapsuleContainer_Previews: PreviewProvider {
                     Image(systemName: "checkmark")
                 }
                 ListEntry(headline: "Words of Radiance",
-                          subline: "Brandon Sanderson") {
-                    Image(systemName: "checkmark")
-                }
+                          subline: "Brandon Sanderson")
             })
             CapsuleContainer (mainContent: {
                 Text("One item")

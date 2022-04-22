@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct HorizontalBinaryColorView: View {
+public struct SplitColor: View {
     private var c1: Color
     private var c2: Color
     private var divide: CGFloat
@@ -21,13 +21,28 @@ public struct HorizontalBinaryColorView: View {
     }
 }
 
-struct HorizontalBinaryColorView_Previews: PreviewProvider {
-    static var previews: some View {
-        HorizontalBinaryColorView(.red, .green, 0.3)
+public extension Capsule where Background == SplitColor {
+    init(@ViewBuilder contentBuilder: () -> Content)
+    {
+        self.init(backgroundBuilder: { SplitColor(Color(.systemGray6), .white, 1) }) {
+            contentBuilder()
+        }
+    }
+
+    func background(_ c1: Color, _ c2: Color = Color(.systemGray6), progress: CGFloat) -> some View {
+        var updatedView = self
+        updatedView.backgroundContent = SplitColor(c1, c2, progress)
+        return updatedView
     }
 }
 
-struct BinaryColorCapsule_Previews: PreviewProvider {
+struct SplitColor_Previews: PreviewProvider {
+    static var previews: some View {
+        SplitColor(.red, .green, 0.3)
+    }
+}
+
+struct SplitColorCapsule_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
             Capsule {
@@ -40,13 +55,7 @@ struct BinaryColorCapsule_Previews: PreviewProvider {
                 Image(systemName: "checkmark")
             }.background(.red, .blue, progress: 0.3)
             Capsule {
-                VStack(alignment: .leading) {
-                    Text("Hello World!")
-                    Text("Long Author Name")
-                        .font(.smallCaps(.subheadline)())
-                }
-                Spacer()
-                Image(systemName: "checkmark")
+                ListEntry(headline: "Hello World!")
             }.background(.purple, progress: 0.7)
         }
         .padding(.horizontal, 10)
