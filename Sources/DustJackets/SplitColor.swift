@@ -57,6 +57,14 @@ struct SplitColorCapsule_Previews: PreviewProvider {
             Capsule {
                 ListEntry(headline: "Hello World!")
             }.background(.purple, progress: 0.7)
+            HStack {
+                Capsule {
+                    ListEntry(headline: "Hello World!")
+                }.background(.purple, progress: 0.7)
+                Capsule {
+                    ListEntry(headline: "Hello World!")
+                }.background(.purple, progress: 0.5)
+            }
         }
         .padding(.horizontal, 10)
     }

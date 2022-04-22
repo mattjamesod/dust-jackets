@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct SliderCapsule<Content: View>: View, Identifiable {
+public struct CapsuleSlider<Content: View>: View, Identifiable {
     public var id: UUID = UUID()
     
     private var content: Content
@@ -18,17 +18,17 @@ public struct SliderCapsule<Content: View>: View, Identifiable {
     }
 }
 
-struct SliderCapsule_Previews: PreviewProvider {
+struct CapsuleSlider_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            SliderCapsule {
+            CapsuleSlider {
                 Text("Hello World!")
             }
-            SliderCapsule {
+            CapsuleSlider {
                 Text("We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers.")
             }
             HStack {
-                SliderCapsule {
+                CapsuleSlider {
                     Text("We and our partners store and/or access information on a device, such as cookies and process personal data, such as unique identifiers.")
                     Image(systemName: "checkmark")
                 }
