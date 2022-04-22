@@ -4,7 +4,7 @@ public struct Capsule<Content: View, Background: View>: View, Identifiable {
     public var id: UUID = UUID()
     
     private var content: Content
-    var backgroundContent: Background
+    private var backgroundContent: Background
     
     private let MIN_HEIGHT: CGFloat = CapsuleConstants.MIN_HEIGHT
     private let CORNER_RADIUS: CGFloat = CapsuleConstants.CORNER_RADIUS
@@ -39,6 +39,21 @@ public extension Capsule where Background == Color {
     func backgroundColor(_ color: Color) -> some View {
         var updatedView = self
         updatedView.backgroundContent = color
+        return updatedView
+    }
+}
+
+public extension Capsule where Background == HorizontalBinaryColorView {
+    init(@ViewBuilder contentBuilder: () -> Content)
+    {
+        self.init(backgroundBuilder: { HorizontalBinaryColorView(Color(.systemGray6), .white, 1) }) {
+            contentBuilder()
+        }
+    }
+
+    func background(_ c1: Color, _ c2: Color, divide: CGFloat) -> some View {
+        var updatedView = self
+        updatedView.backgroundContent = HorizontalBinaryColorView(c1, c2, divide)
         return updatedView
     }
 }
