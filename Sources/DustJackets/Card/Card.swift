@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Card<Content: View>: View {
+public struct Card<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
     
@@ -8,7 +8,7 @@ struct Card<Content: View>: View {
         colorScheme == .dark ? Color(.systemGray5) : .white
     }
     
-    var body: some View {
+    public var body: some View {
         content
             .padding(.vertical, CardConstants.CONTAINER_VERTICAL_PADDING)
             .padding(.horizontal, CardConstants.CONTAINER_HORIZONTAL_PADDING)
@@ -23,6 +23,10 @@ struct Card<Content: View>: View {
                     y: CardConstants.SHADOW_OFFSET
                 )
             }
+    }
+    
+    public init(@ViewBuilder contentBuilder: () -> Content) {
+        self.content = contentBuilder()
     }
 }
 
