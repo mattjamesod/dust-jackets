@@ -5,7 +5,8 @@ public struct Card<Content: View>: View {
     @ViewBuilder var content: Content
     
     private var backgroundColor: Color {
-        colorScheme == .dark ? Color(.systemGray5) : .white
+        colorScheme == .dark ?
+        Color(.systemGray5) : Color(.systemGray6)
     }
     
     public var body: some View {
