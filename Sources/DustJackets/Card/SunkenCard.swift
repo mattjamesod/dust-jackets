@@ -44,6 +44,10 @@ public struct SunkenCard<Content: View>: View {
                 .overlay(overlayView)
             )
     }
+    
+    public init(@ViewBuilder contentBuilder: () -> Content) {
+        self.content = contentBuilder()
+    }
 }
 
 struct SunkenCard_Previews: PreviewProvider {
