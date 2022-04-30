@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct SunkenCard<Content: View>: View {
+public struct SunkenCard<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
     
@@ -33,7 +33,7 @@ struct SunkenCard<Content: View>: View {
             )
     }
     
-    var body: some View {
+    public var body: some View {
         content
             .padding(.vertical, CardConstants.CONTAINER_VERTICAL_PADDING)
             .padding(.horizontal, CardConstants.CONTAINER_HORIZONTAL_PADDING)
