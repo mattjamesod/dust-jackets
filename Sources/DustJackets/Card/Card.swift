@@ -1,12 +1,15 @@
 import SwiftUI
 
-public struct Card<Content: View>: View {
+public struct Card<Content: View, Background: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
+    @ViewBuilder var lightBackgroundContent: Background
+    @ViewBuilder var darkBackgroundContent: Background
     
-    private var backgroundColor: Color {
+    private var backgroundContent: Background {
         colorScheme == .dark ?
-        Color(.systemGray5) : Color(.systemGray6)
+            darkBackgroundContent :
+            lightBackgroundContent
     }
     
     public var body: some View {
@@ -14,7 +17,7 @@ public struct Card<Content: View>: View {
             .padding(.vertical, CardConstants.CONTAINER_VERTICAL_PADDING)
             .padding(.horizontal, CardConstants.CONTAINER_HORIZONTAL_PADDING)
             .frame(maxWidth: .infinity)
-            .background(backgroundColor)
+            .background(backgroundContent)
             .cornerRadius(CardConstants.CORNER_RADIUS)
             .if(colorScheme == .light) { view in
                 view.shadow(
@@ -26,8 +29,37 @@ public struct Card<Content: View>: View {
             }
     }
     
-    public init(@ViewBuilder contentBuilder: () -> Content) {
-        self.content = contentBuilder()
+    public init(
+        @ViewBuilder lightBackgroundBuilder: () -> Background,
+        @ViewBuilder darkBackgroundBuilder: () -> Background,
+        @ViewBuilder contentBuilder: () -> Content)
+    {
+        lightBackgroundContent = lightBackgroundBuilder()
+        darkBackgroundContent = darkBackgroundBuilder()
+        content = contentBuilder()
+    }
+}
+
+public extension Card where Background == Color {
+    init(_ backgroundColorLight: Color = Color(.systemGray6),
+         _ backgroundColorDark: Color = Color(.systemGray5),
+         @ViewBuilder contentBuilder: () -> Content)
+    {
+        self.init(lightBackgroundBuilder: { backgroundColorLight }, darkBackgroundBuilder: { backgroundColorDark }) {
+            contentBuilder()
+        }
+    }
+    
+    func lightBackground(_ color: Color) -> some View {
+        var updatedView = self
+        updatedView.lightBackgroundContent = color
+        return updatedView
+    }
+    
+    func darkBackground(_ color: Color) -> some View {
+        var updatedView = self
+        updatedView.darkBackgroundContent = color
+        return updatedView
     }
 }
 
@@ -87,6 +119,7 @@ struct Card_Previews: PreviewProvider {
                     }
                 }
             }
+            .darkBackground(.red)
         }
     }
     

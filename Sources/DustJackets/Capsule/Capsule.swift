@@ -6,17 +6,14 @@ public struct Capsule<Content: View, Background: View>: View, Identifiable {
     private var content: Content
     var backgroundContent: Background
     
-    private let MIN_HEIGHT: CGFloat = CapsuleConstants.MIN_HEIGHT
-    private let CORNER_RADIUS: CGFloat = CapsuleConstants.CORNER_RADIUS
-    
     public var body: some View {
         HStack(spacing: 0) {
             content
         }
-        .padding(CORNER_RADIUS)
-        .frame(maxWidth: .infinity, minHeight: MIN_HEIGHT)
+        .padding(CapsuleConstants.CORNER_RADIUS)
+        .frame(maxWidth: .infinity, minHeight: CapsuleConstants.MIN_HEIGHT)
         .background(backgroundContent)
-        .cornerRadius(CORNER_RADIUS)
+        .cornerRadius(CapsuleConstants.CORNER_RADIUS)
     }
     
     public init(
