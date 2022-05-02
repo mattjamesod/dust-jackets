@@ -7,7 +7,7 @@ public class NavigationOption<T>: ObservableObject, Identifiable where T: Compar
     private var imageUnselected: Image
     private var imageSelected: Image
     
-    private var id: T
+    var id: T
     
     func update(_ new: T) {
         if self.id == new {

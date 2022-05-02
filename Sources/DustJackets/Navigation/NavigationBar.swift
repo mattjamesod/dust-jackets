@@ -18,7 +18,7 @@ public struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
                 Spacer()
                 NavigationItem<ViewIdentifier>(details: option)
                     .onTapGesture {
-                        selected = option.id as! ViewIdentifier
+                        selected = option.id
                         options.forEach { o in
                             o.update(selected)
                         }
