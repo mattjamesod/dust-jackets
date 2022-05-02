@@ -1,27 +1,31 @@
 import SwiftUI
 
-struct NavigationItem: View {
-    var systemImage: String
-    var text: String? = nil
+struct NavigationItem<T>: View where T: Comparable {
+    @ObservedObject var details: NavigationOption<T>
     
     var body: some View {
         VStack(spacing:2) {
-            Image(systemName: systemImage)
-                .font(.system(size: 22))
-            if let givenText = text {
-                Text(givenText)
-                    .font(.system(size: 10))
+            details.image
+                .font(.bold(.title)())
+            if let caption = details.caption {
+                Text(caption)
+                    .font(.caption)
             }
         }
-//        .foregroundColor(activeView == details.desiredView ? .primary : Color(.systemGray2))
-//        .onTapGesture {
-//            activeView = details.desiredView
-//        }
     }
 }
 
 struct NavigationItem_Previews: PreviewProvider {
+    @State static var selected: TestNavEnum = .success
+    
+    static var options = [
+        NavigationOption<TestNavEnum>(Image(systemName: "checkmark"), id: .success),
+        NavigationOption<TestNavEnum>(Image(systemName: "x.circle"), id: .failure)
+    ]
+    
     static var previews: some View {
-        NavigationItem(systemImage: "checkmark", text: "Success")
+        Text("Hello world!")
+            .bottomNavBar($selected, options: options)
+        NavigationItem(details: options[0])
     }
 }
