@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
+public struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
     @Environment(\.colorScheme) var colorScheme
     @Binding var selected: ViewIdentifier
     
@@ -28,7 +28,7 @@ struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
         }
     }
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         VStack(spacing: 0) {
             Spacer()
             content
@@ -50,7 +50,7 @@ struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
         }
     }
     
-    init(_ selected: Binding<ViewIdentifier>, options: [NavigationOption<ViewIdentifier>]) {
+    public init(_ selected: Binding<ViewIdentifier>, options: [NavigationOption<ViewIdentifier>]) {
         self._selected = selected
         self.options = options
         options.forEach { o in
@@ -59,7 +59,7 @@ struct NavigationBarModifier<ViewIdentifier: Comparable>: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func bottomNavBar<ViewIdentifier: Comparable>(
         _ selected: Binding<ViewIdentifier>,
         options: [NavigationOption<ViewIdentifier>]

@@ -1,6 +1,6 @@
 import SwiftUI
 
-class NavigationOption<T>: ObservableObject, Identifiable where T: Comparable {
+public class NavigationOption<T>: ObservableObject, Identifiable where T: Comparable {
     @Published var image: Image
     var caption: String? = nil
     
@@ -26,7 +26,7 @@ class NavigationOption<T>: ObservableObject, Identifiable where T: Comparable {
         image = imageUnselected
     }
     
-    init(_ image: Image, selectedImage: Image? = nil, id: T) {
+    public init(_ image: Image, selectedImage: Image? = nil, id: T) {
         self.imageUnselected = image
         self.imageSelected = selectedImage ?? image
         self.image = imageUnselected
