@@ -4,6 +4,7 @@
 /*.xcodeproj
 xcuserdata/
 DerivedData/
+IntegrationTesting/
 Sources/DustJackets/__TEMPLATE.swift
 .swiftpm/config/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
