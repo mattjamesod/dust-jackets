@@ -7,6 +7,7 @@ public struct Card<Content: View, ReverseContent: View, Background: View>: View 
     @ViewBuilder var darkBackgroundContent: Background
     
     var isReversible: Bool = false
+    var toExecuteOnFlip: (() -> ())? = nil
     
     @State var backDegree = -90.0
     @State var frontDegree = 0.0
@@ -14,6 +15,10 @@ public struct Card<Content: View, ReverseContent: View, Background: View>: View 
     
     func flip () {
         answerRevealed.toggle()
+        
+        if let toExecute = toExecuteOnFlip {
+            toExecute()
+        }
         
         if answerRevealed {
             withAnimation(.easeInOut(duration: CardConstants.FLIP_DURATION)) {
@@ -137,6 +142,12 @@ public extension Card {
         }
         card.isReversible = true
         return card
+    }
+    
+    func onFlip(toExecute : @escaping (Bool) -> ()) -> some View {
+        var updatedView = self
+        updatedView.toExecuteOnFlip = { toExecute(answerRevealed) }
+        return updatedView
     }
 }
 
