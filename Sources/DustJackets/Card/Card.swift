@@ -130,7 +130,10 @@ public extension Card where Background == Color {
 }
 
 public extension Card {
-    func reversible<NewReverseContent: View>(@ViewBuilder reverseContentBuilder: () -> NewReverseContent) -> some View {
+    func reversible<NewReverseContent: View>(
+        onFlip : @escaping (Bool) -> () = { _ in },
+        @ViewBuilder reverseContentBuilder: () -> NewReverseContent
+    ) -> some View {
         var card =  Card<_, NewReverseContent, _> {
             self.lightBackgroundContent
         } darkBackgroundBuilder: {
@@ -141,13 +144,8 @@ public extension Card {
             self.content
         }
         card.isReversible = true
+        card.toExecuteOnFlip = { onFlip(answerRevealed) }
         return card
-    }
-    
-    func onFlip(toExecute : @escaping (Bool) -> ()) -> some View {
-        var updatedView = self
-        updatedView.toExecuteOnFlip = { toExecute(answerRevealed) }
-        return updatedView
     }
 }
 
