@@ -1,7 +1,6 @@
 import SwiftUI
 
 public struct Card<Content: View, ReverseContent: View, Background: View>: View {
-    @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
     @ViewBuilder var reverseContent: ReverseContent
     @ViewBuilder var lightBackgroundContent: Background
@@ -12,12 +11,6 @@ public struct Card<Content: View, ReverseContent: View, Background: View>: View 
     @State var backDegree = -90.0
     @State var frontDegree = 0.0
     @State var answerRevealed: Bool = false
-    
-    private var backgroundContent: Background {
-        colorScheme == .dark ?
-            darkBackgroundContent :
-            lightBackgroundContent
-    }
     
     func flip () {
         answerRevealed.toggle()
@@ -43,29 +36,37 @@ public struct Card<Content: View, ReverseContent: View, Background: View>: View 
         Group {
             if isReversible {
                 ZStack {
-                    content.rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
-                    reverseContent.rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                    CardBase(lightBackgroundBuilder: {
+                            lightBackgroundContent
+                        }, darkBackgroundBuilder: {
+                            darkBackgroundContent
+                        }, contentBuilder: {
+                            content
+                        }
+                    )
+                    .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                    CardBase(lightBackgroundBuilder: {
+                            lightBackgroundContent
+                        }, darkBackgroundBuilder: {
+                            darkBackgroundContent
+                        }, contentBuilder: {
+                            reverseContent
+                        }
+                    )
+                    .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
                 }
+                .onTapGesture(perform: flip)
             }
             else {
-                content
+                CardBase(lightBackgroundBuilder: {
+                        lightBackgroundContent
+                    }, darkBackgroundBuilder: {
+                        darkBackgroundContent
+                    }, contentBuilder: {
+                        content
+                    }
+                )
             }
-        }
-        .padding(.vertical, CardConstants.CONTAINER_VERTICAL_PADDING)
-        .padding(.horizontal, CardConstants.CONTAINER_HORIZONTAL_PADDING)
-        .frame(maxWidth: .infinity)
-        .background(backgroundContent)
-        .cornerRadius(CardConstants.CORNER_RADIUS)
-        .if(colorScheme == .light) { view in
-            view.shadow(
-                color: .gray,
-                radius: CardConstants.SHADOW_RADIUS,
-                x: CardConstants.SHADOW_OFFSET,
-                y: CardConstants.SHADOW_OFFSET
-            )
-        }
-        .if(isReversible) { view in
-            view.onTapGesture(perform: flip)
         }
     }
     
@@ -145,65 +146,5 @@ extension View {
         } else {
             self
         }
-    }
-}
-
-struct Card_Previews: PreviewProvider {
-    
-    static var columns: [GridItem] =
-             Array(repeating: .init(.flexible()), count: 2)
-    
-    static var example: some View {
-        LazyVGrid(columns: columns) {
-            Card {
-                VStack {
-                    HStack {
-                        Text("Manana")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    HStack {
-                        Text("Morning")
-                        Spacer()
-                    }
-                }
-            }
-            Card {
-                VStack {
-                    HStack {
-                        Text("Perro")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    HStack {
-                        Text("Dog")
-                        Spacer()
-                    }
-                }
-            }.reversible { Text("Hello world!") }
-            Card {
-                VStack {
-                    HStack {
-                        Text("Hola")
-                            .fontWeight(.bold)
-                        Spacer()
-                    }
-                    HStack {
-                        Text("Hello")
-                        Spacer()
-                    }
-                }
-            }
-            .darkBackground(.red)
-        }
-    }
-    
-    static var previews: some View {
-        example
-            .preferredColorScheme(.light)
-            .padding(.horizontal, 10)
-        example
-            .preferredColorScheme(.dark)
-            .padding(.horizontal, 10)
     }
 }
