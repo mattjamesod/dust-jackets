@@ -133,7 +133,7 @@ public extension Card {
     func reversible<NewReverseContent: View>(
         onFlip : @escaping (Bool) -> () = { _ in },
         @ViewBuilder reverseContentBuilder: () -> NewReverseContent
-    ) -> some View {
+    ) -> Card<Content, NewReverseContent, Background> {
         var card =  Card<_, NewReverseContent, _> {
             self.lightBackgroundContent
         } darkBackgroundBuilder: {
