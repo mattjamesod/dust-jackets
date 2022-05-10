@@ -33,4 +33,6 @@ public struct ObscuredText: View {
         }
         .frame(height: 20)
     }
+    
+    public init() {  }
 }

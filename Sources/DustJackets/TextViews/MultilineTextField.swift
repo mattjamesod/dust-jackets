@@ -21,12 +21,15 @@ public struct MultilineTextField: View {
 
                 })
                 .opacity(0)
-                .foregroundColor(Color.red)
                 
             TextEditor(text: $text)
                 .padding(EdgeInsets(top: -7, leading: -3, bottom: -5, trailing: -7))
                 .frame(height: textEditorHeight + 12)
         }
         .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+    }
+    
+    public init(text: Binding<String>) {
+        self._text = text
     }
 }
