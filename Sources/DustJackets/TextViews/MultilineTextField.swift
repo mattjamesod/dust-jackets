@@ -7,11 +7,11 @@ struct ViewHeightKey: PreferenceKey {
     }
 }
 
-struct MultilineTextField: View{
+public struct MultilineTextField: View {
     @Binding var text: String
-    @State private var textEditorHeight : CGFloat = 100
+    @State private var textEditorHeight: CGFloat = 100
     
-    var body: some View{
+    public var body: some View{
         ZStack(alignment: .topLeading) {
             Text(text)
                 .background(GeometryReader {
