@@ -27,6 +27,7 @@ public struct MultilineTextField: View {
                 .frame(height: textEditorHeight + 12)
         }
         .onPreferenceChange(ViewHeightKey.self) { textEditorHeight = $0 }
+        .onAppear { UITextView.appearance().backgroundColor = .clear }
     }
     
     public init(text: Binding<String>) {
