@@ -1,10 +1,8 @@
 import SwiftUI
 
-public struct Card<Content: View, ReverseContent: View, Background: View>: View {
+public struct Card<Content: View, ReverseContent: View>: View {
     @ViewBuilder var content: Content
     @ViewBuilder var reverseContent: ReverseContent
-    @ViewBuilder var lightBackgroundContent: Background
-    @ViewBuilder var darkBackgroundContent: Background
     
     var isReversible: Bool = false
     var toExecuteOnFlip: ((Bool) -> ())? = nil
@@ -41,91 +39,32 @@ public struct Card<Content: View, ReverseContent: View, Background: View>: View 
         Group {
             if isReversible {
                 ZStack {
-                    CardBase(lightBackgroundBuilder: {
-                            lightBackgroundContent
-                        }, darkBackgroundBuilder: {
-                            darkBackgroundContent
-                        }, contentBuilder: {
-                            content
-                        }
-                    )
-                    .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
-                    CardBase(lightBackgroundBuilder: {
-                            lightBackgroundContent
-                        }, darkBackgroundBuilder: {
-                            darkBackgroundContent
-                        }, contentBuilder: {
-                            reverseContent
-                        }
-                    )
-                    .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                    CardBase(contentBuilder: { content })
+                        .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                    CardBase(contentBuilder: { reverseContent })
+                        .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
                 }
                 .onTapGesture(perform: flip)
             }
             else {
-                CardBase(lightBackgroundBuilder: {
-                        lightBackgroundContent
-                    }, darkBackgroundBuilder: {
-                        darkBackgroundContent
-                    }, contentBuilder: {
-                        content
-                    }
-                )
+                CardBase(contentBuilder: { content })
             }
         }
     }
     
     public init(
-        @ViewBuilder lightBackgroundBuilder: () -> Background,
-        @ViewBuilder darkBackgroundBuilder: () -> Background,
         @ViewBuilder reverseContentBuilder: () -> ReverseContent,
         @ViewBuilder contentBuilder: () -> Content)
     {
-        lightBackgroundContent = lightBackgroundBuilder()
-        darkBackgroundContent = darkBackgroundBuilder()
         content = contentBuilder()
         reverseContent = reverseContentBuilder()
     }
 }
 
-public extension Card where Background == Color, ReverseContent == EmptyView {
-    init(_ backgroundColorLight: Color = Color(.systemGray6),
-         _ backgroundColorDark: Color = Color(.systemGray5),
-         @ViewBuilder contentBuilder: () -> Content)
-    {
-        self.init(
-            lightBackgroundBuilder: { backgroundColorLight },
-            darkBackgroundBuilder: { backgroundColorDark }
-        ) {
-            contentBuilder()
-        }
-    }
-}
-
 public extension Card where ReverseContent == EmptyView {
-    init(
-        @ViewBuilder lightBackgroundBuilder: () -> Background,
-        @ViewBuilder darkBackgroundBuilder: () -> Background,
-        @ViewBuilder contentBuilder: () -> Content)
-    {
-        lightBackgroundContent = lightBackgroundBuilder()
-        darkBackgroundContent = darkBackgroundBuilder()
+    init(@ViewBuilder contentBuilder: () -> Content) {
         content = contentBuilder()
         reverseContent = EmptyView()
-    }
-}
-
-public extension Card where Background == Color {
-    func lightBackground(_ color: Color) -> some View {
-        var updatedView = self
-        updatedView.lightBackgroundContent = color
-        return updatedView
-    }
-    
-    func darkBackground(_ color: Color) -> some View {
-        var updatedView = self
-        updatedView.darkBackgroundContent = color
-        return updatedView
     }
 }
 
@@ -133,16 +72,12 @@ public extension Card {
     func reversible<NewReverseContent: View>(
         onFlip : @escaping (Bool) -> () = { _ in },
         @ViewBuilder reverseContentBuilder: () -> NewReverseContent
-    ) -> Card<Content, NewReverseContent, Background> {
-        var card =  Card<_, NewReverseContent, _> {
-            self.lightBackgroundContent
-        } darkBackgroundBuilder: {
-            self.darkBackgroundContent
-        } reverseContentBuilder: {
-            reverseContentBuilder()
-        } contentBuilder: {
-            self.content
-        }
+    ) -> Card<Content, NewReverseContent> {
+        var card = Card<_, NewReverseContent>(
+            reverseContentBuilder: reverseContentBuilder,
+            contentBuilder: { self.content }
+        )
+            
         card.isReversible = true
         card.toExecuteOnFlip = onFlip
         return card

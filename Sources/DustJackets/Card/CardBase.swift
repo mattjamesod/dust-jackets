@@ -1,41 +1,26 @@
 import SwiftUI
 
-public struct CardBase<Content: View, Background: View>: View {
+public struct CardBase<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
-    @ViewBuilder var lightBackgroundContent: Background
-    @ViewBuilder var darkBackgroundContent: Background
-    
-    private var backgroundContent: Background {
-        colorScheme == .dark ?
-            darkBackgroundContent :
-            lightBackgroundContent
-    }
     
     public var body: some View {
-        content
-            .padding(.vertical, CardConstants.CONTAINER_VERTICAL_PADDING)
-            .padding(.horizontal, CardConstants.CONTAINER_HORIZONTAL_PADDING)
-            .frame(maxWidth: .infinity)
-            .background(backgroundContent)
-            .cornerRadius(CardConstants.CORNER_RADIUS)
-            .if(colorScheme == .light) { view in
-                view.shadow(
-                    color: .gray,
-                    radius: CardConstants.SHADOW_RADIUS,
-                    x: CardConstants.SHADOW_OFFSET,
-                    y: CardConstants.SHADOW_OFFSET
-                )
-            }
+        ZStack {
+            RoundedRectangle(cornerRadius: 7.5)
+                .foregroundColor(Color(.systemGray5))
+                .if(colorScheme == .light) { view in
+                    view.shadow(
+                        color: .gray,
+                        radius: 3,
+                        x: 1.5,
+                        y: 1.5
+                    )
+                }
+            content
+        }
     }
     
-    public init(
-        @ViewBuilder lightBackgroundBuilder: () -> Background,
-        @ViewBuilder darkBackgroundBuilder: () -> Background,
-        @ViewBuilder contentBuilder: () -> Content)
-    {
-        lightBackgroundContent = lightBackgroundBuilder()
-        darkBackgroundContent = darkBackgroundBuilder()
+    public init(@ViewBuilder contentBuilder: () -> Content) {
         content = contentBuilder()
     }
 }
