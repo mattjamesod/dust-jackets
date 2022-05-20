@@ -71,6 +71,12 @@ public extension Card where ReverseContent == EmptyView {
         reverseContent = EmptyView()
         self.color = Color(.systemGray5)
     }
+    
+    init(@ViewBuilder contentBuilder: () -> Content, color: Color) {
+        content = contentBuilder()
+        reverseContent = EmptyView()
+        self.color = color
+    }
 }
 
 public extension Card {
@@ -81,7 +87,7 @@ public extension Card {
         var card = Card<_, NewReverseContent>(
             reverseContentBuilder: reverseContentBuilder,
             contentBuilder: { self.content },
-            color: Color(.systemGray5)
+            color: self.color
         )
             
         card.isReversible = true
