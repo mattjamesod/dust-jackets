@@ -7,7 +7,7 @@ public struct Card<Content: View, ReverseContent: View>: View {
     var isReversible: Bool = false
     var toExecuteOnFlip: ((Bool) -> ())? = nil
     
-    var color: Color
+    public var color: Color
     
     @State var backDegree = -90.0
     @State var frontDegree = 0.0
