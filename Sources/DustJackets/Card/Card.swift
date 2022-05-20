@@ -72,7 +72,7 @@ public extension Card where ReverseContent == EmptyView {
         self.color = Color(.systemGray5)
     }
     
-    init(@ViewBuilder contentBuilder: () -> Content, color: Color) {
+    init(color: Color, @ViewBuilder contentBuilder: () -> Content) {
         content = contentBuilder()
         reverseContent = EmptyView()
         self.color = color
