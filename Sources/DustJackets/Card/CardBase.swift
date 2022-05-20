@@ -4,10 +4,12 @@ public struct CardBase<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @ViewBuilder var content: Content
     
+    var color: Color
+    
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 7.5)
-                .foregroundColor(Color(.systemGray5))
+                .foregroundColor(color)
                 .if(colorScheme == .light) { view in
                     view.shadow(
                         color: .gray,
@@ -20,7 +22,8 @@ public struct CardBase<Content: View>: View {
         }
     }
     
-    public init(@ViewBuilder contentBuilder: () -> Content) {
+    public init(@ViewBuilder contentBuilder: () -> Content, color: Color) {
         content = contentBuilder()
+        self.color = color
     }
 }

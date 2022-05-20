@@ -35,37 +35,37 @@ public extension Capsule where Background == SplitColor {
         return updatedView
     }
 }
-
-struct SplitColor_Previews: PreviewProvider {
-    static var previews: some View {
-        SplitColor(.red, .green, 0.3)
-    }
-}
-
-struct SplitColorCapsule_Previews: PreviewProvider {
-    static var previews: some View {
-        VStack {
-            Capsule {
-                VStack(alignment: .leading) {
-                    Text("Hello World!")
-                    Text("Long Author Name")
-                        .font(.smallCaps(.subheadline)())
-                }
-                Spacer()
-                Image(systemName: "checkmark")
-            }.background(.red, .blue, progress: 0.3)
-            Capsule {
-                ListEntry(headline: "Hello World!")
-            }.background(.purple, progress: 0.7)
-            HStack {
-                Capsule {
-                    ListEntry(headline: "Hello World!")
-                }.background(.purple, progress: 0.7)
-                Capsule {
-                    ListEntry(headline: "Hello World!")
-                }.background(.purple, progress: 0.5)
-            }
-        }
-        .padding(.horizontal, 10)
-    }
-}
+//
+//struct SplitColor_Previews: PreviewProvider {
+//    static var previews: some View {
+//        SplitColor(.red, .green, 0.3)
+//    }
+//}
+//
+//struct SplitColorCapsule_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VStack {
+//            Capsule {
+//                VStack(alignment: .leading) {
+//                    Text("Hello World!")
+//                    Text("Long Author Name")
+//                        .font(.smallCaps(.subheadline)())
+//                }
+//                Spacer()
+//                Image(systemName: "checkmark")
+//            }.background(.red, .blue, progress: 0.3)
+//            Capsule {
+//                ListEntry(headline: "Hello World!")
+//            }.background(.purple, progress: 0.7)
+//            HStack {
+//                Capsule {
+//                    ListEntry(headline: "Hello World!")
+//                }.background(.purple, progress: 0.7)
+//                Capsule {
+//                    ListEntry(headline: "Hello World!")
+//                }.background(.purple, progress: 0.5)
+//            }
+//        }
+//        .padding(.horizontal, 10)
+//    }
+//}

@@ -7,6 +7,8 @@ public struct Card<Content: View, ReverseContent: View>: View {
     var isReversible: Bool = false
     var toExecuteOnFlip: ((Bool) -> ())? = nil
     
+    var color: Color
+    
     @State var backDegree = -90.0
     @State var frontDegree = 0.0
     @State var answerRevealed: Bool = false
@@ -39,25 +41,27 @@ public struct Card<Content: View, ReverseContent: View>: View {
         Group {
             if isReversible {
                 ZStack {
-                    CardBase(contentBuilder: { content })
+                    CardBase(contentBuilder: { content }, color: color)
                         .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
-                    CardBase(contentBuilder: { reverseContent })
+                    CardBase(contentBuilder: { reverseContent }, color: color)
                         .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
                 }
                 .onTapGesture(perform: flip)
             }
             else {
-                CardBase(contentBuilder: { content })
+                CardBase(contentBuilder: { content }, color: color)
             }
         }
     }
     
     public init(
         @ViewBuilder reverseContentBuilder: () -> ReverseContent,
-        @ViewBuilder contentBuilder: () -> Content)
+        @ViewBuilder contentBuilder: () -> Content,
+        color: Color)
     {
         content = contentBuilder()
         reverseContent = reverseContentBuilder()
+        self.color = color
     }
 }
 
@@ -65,6 +69,7 @@ public extension Card where ReverseContent == EmptyView {
     init(@ViewBuilder contentBuilder: () -> Content) {
         content = contentBuilder()
         reverseContent = EmptyView()
+        self.color = Color(.systemGray5)
     }
 }
 
@@ -75,7 +80,8 @@ public extension Card {
     ) -> Card<Content, NewReverseContent> {
         var card = Card<_, NewReverseContent>(
             reverseContentBuilder: reverseContentBuilder,
-            contentBuilder: { self.content }
+            contentBuilder: { self.content },
+            color: Color(.systemGray5)
         )
             
         card.isReversible = true
