@@ -48,7 +48,7 @@ public struct Card<Content: View, ReverseContent: View>: View {
                 ZStack {
                     CardBase(contentBuilder: { content }, color: color, flip: { flip(false) })
                         .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
-                    CardBase(contentBuilder: { reverseContent }, color: color)
+                    CardBase(contentBuilder: { reverseContent }, color: color, flip: { flip(false) })
                         .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
                 }
                 .onTapGesture(perform: { flip(true) })
