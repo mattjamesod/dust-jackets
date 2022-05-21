@@ -14,11 +14,7 @@ public struct Card<Content: View, ReverseContent: View>: View {
     @State var frontDegree = 0.0
     @State var answerRevealed: Bool = false
     
-    func flip (_ contentTap: Bool = true) {
-        if flipOnContentTap == contentTap {
-            return
-        }
-        
+    func flip() {
         answerRevealed.toggle()
         
         if let toExecute = toExecuteOnFlip {
@@ -44,20 +40,30 @@ public struct Card<Content: View, ReverseContent: View>: View {
     
     public var body: some View {
         Group {
-            if isReversible {
+            if isReversible && flipOnContentTap {
                 ZStack {
-                    CardBase(contentBuilder: { content }, color: color, flip: { flip(false) })
+                    CardBase(contentBuilder: { content }, color: color)
                         .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
-                    CardBase(contentBuilder: { reverseContent }, color: color, flip: { flip(false) })
+                    CardBase(contentBuilder: { reverseContent }, color: color)
                         .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
                 }
-                .onTapGesture(perform: { flip(true) })
+                .onTapGesture(perform: flip)
+            }
+            else if isReversible && !flipOnContentTap {
+                ZStack {
+                    CardBase(contentBuilder: { content }, color: color, flip: flip)
+                        .rotation3DEffect(Angle(degrees: frontDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                    CardBase(contentBuilder: { reverseContent }, color: color, flip: flip)
+                        .rotation3DEffect(Angle(degrees: backDegree), axis: CardConstants.FLIP_ROTATION_AXIS)
+                }
             }
             else {
                 CardBase(contentBuilder: { content }, color: color)
             }
         }
     }
+    
+
     
     public init(
         @ViewBuilder reverseContentBuilder: () -> ReverseContent,

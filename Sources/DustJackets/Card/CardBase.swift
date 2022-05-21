@@ -45,4 +45,3 @@ public struct CardBase<Content: View>: View {
         self.flip = nil
     }
 }
- 
