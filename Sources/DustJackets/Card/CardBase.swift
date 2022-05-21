@@ -6,6 +6,8 @@ public struct CardBase<Content: View>: View {
     
     var color: Color
     
+    var flip: () -> ()
+    
     public var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 7.5)
@@ -18,12 +20,15 @@ public struct CardBase<Content: View>: View {
                         y: 1.5
                     )
                 }
+                .onTapGesture(perform: flip)
             content
         }
     }
     
-    public init(@ViewBuilder contentBuilder: () -> Content, color: Color) {
+    public init(@ViewBuilder contentBuilder: () -> Content, color: Color, flip: @escaping () -> () = {}) {
         content = contentBuilder()
         self.color = color
+        self.flip = flip
     }
 }
+ 
