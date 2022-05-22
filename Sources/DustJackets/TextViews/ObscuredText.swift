@@ -25,7 +25,7 @@ public struct ObscuredText: View {
     public var body: some View {
         GeometryReader { proxy in
             HStack(spacing: 0) {
-                ForEach(1..<Int(proxy.size.width/pixelSize), id:\.self) { index in
+                ForEach(1..<Int(proxy.size.width/CGFloat(pixelSize)), id:\.self) { index in
                     randomPixelColumn
                 }
             }
