@@ -1,8 +1,8 @@
 import SwiftUI
 
 public struct ObscuredText: View {
-    let pixelSize: Int = 4
-    let pixelsPerColumn: Int = 3
+    let pixelSize: Int
+    let pixelsPerColumn: Int
     
     func pixelColor() -> Color {
         Int.random(in: 0...1) == 1 ? .primary : .clear
@@ -34,5 +34,8 @@ public struct ObscuredText: View {
         .frame(height: 20)
     }
     
-    public init() {  }
+    public init(pixelSize: Int = 4, pixelsPerColumn: Int = 3) {
+        self.pixelSize = pixelSize
+        self.pixelsPerColumn = pixelsPerColumn
+    }
 }
