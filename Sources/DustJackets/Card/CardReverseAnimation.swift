@@ -1,6 +1,6 @@
 import Foundation
 
-public enum CardReverseAnimation {
-    case flip
+public enum CardReverseAnimation: Int {
     case none
+    case flip
 }
