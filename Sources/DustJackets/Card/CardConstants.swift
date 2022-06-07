@@ -12,4 +12,6 @@ open class CardConstants {
     var FLIP_ROTATION_AXIS: (x: CGFloat, y: CGFloat, z: CGFloat) { (x: 1, y: 1, z: 0) }
     var FLIP_DURATION: CGFloat { 0.15 }
     var FLIP_DELAY: CGFloat { 0.15 }
+    
+    public init() {}
 }
