@@ -1,6 +1,6 @@
 import SwiftUI
 
-public class CardConstants {
+open class CardConstants {
     public static var defaults: CardConstants = CardConstants()
     
     var CORNER_RADIUS: CGFloat { 7.5 }
