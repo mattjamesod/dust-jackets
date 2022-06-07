@@ -6,25 +6,25 @@ public struct CardBase<Content: View>: View {
     
     var color: Color
     
-    var flip: (() -> ())?
+    var reverseMethod: (() -> ())?
     
     private var cardBack: some View {
-        RoundedRectangle(cornerRadius: CardConstants.CORNER_RADIUS)
+        RoundedRectangle(cornerRadius: CardConstants.defaults.CORNER_RADIUS)
             .foregroundColor(color)
             .if(colorScheme == .light) { view in
                 view.shadow(
                     color: .gray,
-                    radius: CardConstants.SHADOW_RADIUS,
-                    x: CardConstants.SHADOW_OFFSET,
-                    y: CardConstants.SHADOW_OFFSET
+                    radius: CardConstants.defaults.SHADOW_RADIUS,
+                    x: CardConstants.defaults.SHADOW_OFFSET,
+                    y: CardConstants.defaults.SHADOW_OFFSET
                 )
             }
     }
     
     public var body: some View {
         ZStack {
-            if flip != nil {
-                cardBack.onTapGesture(perform: flip!)
+            if reverseMethod != nil {
+                cardBack.onTapGesture(perform: reverseMethod!)
             }
             else {
                 cardBack
@@ -33,15 +33,15 @@ public struct CardBase<Content: View>: View {
         }
     }
     
-    public init(@ViewBuilder contentBuilder: () -> Content, color: Color, flip: @escaping () -> ()) {
+    public init(@ViewBuilder contentBuilder: () -> Content, color: Color, reverseMethod: @escaping () -> ()) {
         content = contentBuilder()
         self.color = color
-        self.flip = flip
+        self.reverseMethod = reverseMethod
     }
     
     public init(@ViewBuilder contentBuilder: () -> Content, color: Color) {
         content = contentBuilder()
         self.color = color
-        self.flip = nil
+        self.reverseMethod = nil
     }
 }
