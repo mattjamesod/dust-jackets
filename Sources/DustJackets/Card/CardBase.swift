@@ -9,14 +9,14 @@ public struct CardBase<Content: View>: View {
     var flip: (() -> ())?
     
     private var cardBack: some View {
-        RoundedRectangle(cornerRadius: 7.5)
+        RoundedRectangle(cornerRadius: CardConstants.CORNER_RADIUS)
             .foregroundColor(color)
             .if(colorScheme == .light) { view in
                 view.shadow(
                     color: .gray,
-                    radius: 3,
-                    x: 1.5,
-                    y: 1.5
+                    radius: CardConstants.SHADOW_RADIUS,
+                    x: CardConstants.SHADOW_OFFSET,
+                    y: CardConstants.SHADOW_OFFSET
                 )
             }
     }
