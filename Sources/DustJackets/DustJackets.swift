@@ -13,3 +13,17 @@ public extension View {
         })
     }
 }
+
+extension EdgeInsets {
+    var horizontal: CGFloat {
+        self.leading + self.trailing
+    }
+    
+    var vertical: CGFloat {
+        self.top + self.bottom
+    }
+    
+    init(vertical: CGFloat, horizontal: CGFloat) {
+        self.init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
+    }
+}
