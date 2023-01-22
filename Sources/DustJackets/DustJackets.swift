@@ -14,16 +14,16 @@ public extension View {
     }
 }
 
-extension EdgeInsets {
-    var horizontal: CGFloat {
+public extension EdgeInsets {
+    var horizontal: Double {
         self.leading + self.trailing
     }
     
-    var vertical: CGFloat {
+    var vertical: Double {
         self.top + self.bottom
     }
     
-    init(vertical: CGFloat, horizontal: CGFloat) {
+    init(vertical: Double, horizontal: Double) {
         self.init(top: vertical, leading: horizontal, bottom: vertical, trailing: horizontal)
     }
 }
