@@ -11,7 +11,7 @@ public extension Int {
 }
 
 public extension DateComponents {
-  var fromNow: Date? {
+  var hence: Date? {
     Calendar.current.date(byAdding: self, to: Date())
   }
     
