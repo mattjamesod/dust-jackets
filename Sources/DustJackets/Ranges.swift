@@ -10,3 +10,14 @@ public extension ClosedRange {
         }
     }
 }
+
+public extension DateInterval {
+    static func withIndifferentOrdering(_ bound1: Date, _ bound2: Date) -> Self {
+        if bound1 <= bound2 {
+            return DateInterval(start: bound1, end: bound2)
+        }
+        else {
+            return DateInterval(start: bound2, end: bound1)
+        }
+    }
+}
